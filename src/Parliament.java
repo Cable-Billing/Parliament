@@ -7,11 +7,8 @@ public class Parliament {
         this.candidates = new Candidate[13];
 
         for (int i = 0; i < 12; i++) {
-            if (i % 2 == 0) {
-                this.candidates[i] = new Candidate(i + 1, Names.NAMES[i], 1);
-            } else {
-                this.candidates[i] = new Candidate(i + 1, Names.NAMES[i], 2);
-            }
+            if (i % 2 == 0) this.candidates[i] = new Candidate(i + 1, Names.NAMES[i], 1);
+            else this.candidates[i] = new Candidate(i + 1, Names.NAMES[i], 2);
         }
 
         this.emptyChair = 12;
@@ -20,10 +17,30 @@ public class Parliament {
 
     public String start() {
         boolean gameFinished = false;
+        int winningTeam = 0;
         while (!gameFinished) {
+            int player = emptyChair - 1;
+            if (player < 0) player = this.candidates.length;
+            String selectedName = this.candidates[player].takeTurn();
 
+            // UPDATE CANDIDATES
+
+            // CHECK TO SEE IF THE GAME ENDS
+            if (this.parliamentIsFilled()) {
+                if (this.parliamentContainsAllTeam1Members()) {
+                    winningTeam = 1;
+                    gameFinished = true;
+                }
+                else if (this.parliamentContainsAllTeam2Members()) {
+                    winningTeam = 2;
+                    gameFinished = true;
+                }
+            }
         }
-        return null;
+
+        // ANNOUNCE THE WINNING TEAM
+        if (winningTeam == 1) return "Team 1 Wins";
+        else return "Team 2 Wins";
     }
 
     private boolean parliamentIsFilled() {
