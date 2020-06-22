@@ -1,5 +1,3 @@
-package net.hvyg;
-
 public class Parliament {
 
     public final Candidate[] candidates;

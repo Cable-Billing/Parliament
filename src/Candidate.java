@@ -1,5 +1,3 @@
-package net.hvyg;
-
 public class Candidate {
 
     public int id;
